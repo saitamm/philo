@@ -7,6 +7,7 @@
 #include <pthread.h>
 #include <pthread.h>
 #include <time.h>
+#include <sys/time.h>
 
 #define MAX_PHILO 200
 
@@ -28,6 +29,8 @@ typedef struct s_philo
 	int		time_to_sleep;
 	int		time_to_eat;
 	int		count_meal;
+	size_t	start_time;
+	size_t	last_meal;
 	int 	flag;
 	t_mtx	*r_fork;
 	t_mtx	*l_fork;
@@ -35,6 +38,8 @@ typedef struct s_philo
 	t_mtx	*eat_mutex;
 	t_mtx	*write_mutex;
 	pthread_t	*t;
+	int		nmbr;
+	int		id;
 }t_philo;
 
 typedef struct e_table
@@ -58,15 +63,18 @@ int	ft_content(char **av, int ac);
 
 void    initial_nbr(char **av, t_argv *nbr, int ac);
 void	init_fork(t_mtx *fork, t_argv nbr);
-void	init_table(t_table *t, t_argv nbr, t_philo *philo);
+void	init_table(t_table *t, t_philo *philo);
 void	init_philo(t_mtx *fork, t_philo *philo, t_argv nbr, t_table *t);
 
 // Routine
 
-// void* routine(void *arg);
-// void	eat(unsigned int id, unsigned int time);
-// void	think(unsigned int id,unsigned int time);
-// void	ft_sleep(unsigned int id,unsigned int time);
-
-
+void	*routine(void *arg);
+int check_dead(t_philo *philo);
+void    print_message(char *str, t_philo *philo);
+void    eat(t_philo *philo);
+size_t get_time(void);
+void    think(t_philo *philo);
+void    ft_sleep(t_philo *philo);
+void    *routine(void *arg);
+void	init_threads(t_philo *philo, t_argv nbr);
 #endif
