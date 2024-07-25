@@ -12,32 +12,30 @@
 
 #include "philo.h"
 
-
-int ft_is_not_digit(char c)
+int	ft_is_not_digit(char c)
 {
-    if (!(c >= '0' && c <= '9'))
-        return (1);
-    return (0);
+	if (!(c >= '0' && c <= '9'))
+		return (1);
+	return (0);
 }
 
-int   ft_check(char *av)
+int	ft_check(char *av)
 {
-    int i;
-    
-    i = 1;
-    while (av[i])
-    {
-        if (ft_is_not_digit(av[i]))
-            return (1);
-        i++;
-    }
+	int	i;
 
-    return (0);
+	i = 1;
+	while (av[i])
+	{
+		if (ft_is_not_digit(av[i]))
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 int	ft_content(char **av, int ac)
 {
-    if (ac != 5 && ac != 6)
+	if (ac != 5 && ac != 6)
 		return (write(2, "wrong of argument number\n", 26), 1);
 	if (ft_atoi(av[1]) > MAX_PHILO || ft_atoi(av[1]) <= 0
 		|| ft_check(av[1]) == 1)
@@ -51,5 +49,5 @@ int	ft_content(char **av, int ac)
 	if (av[5] && (ft_atoi(av[5]) < 0 || ft_check(av[5]) == 1))
 		return (write(2, "Invalid number of times each philosopher must eat\n",
 				51), 1);
-    return (0);
+	return (0);
 }

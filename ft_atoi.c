@@ -14,14 +14,14 @@
 
 static int	ft_whitespace(char c)
 {
-	if (c == ' ' || c == '\t' || c == '\r'
-		|| c == '\f' || c == '\n' || c == '\v')
+	if (c == ' ' || c == '\t' || c == '\r' || c == '\f' || c == '\n'
+		|| c == '\v')
 		return (1);
 	else
 		return (0);
 }
 
-int	ft_atoi(const char	*c)
+int	ft_atoi(const char *c)
 {
 	int	i;
 	int	sign;

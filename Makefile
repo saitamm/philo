@@ -6,11 +6,17 @@
 #    By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/12 09:51:25 by sait-amm          #+#    #+#              #
-#    Updated: 2024/07/20 10:33:29 by sait-amm         ###   ########.fr        #
+#    Updated: 2024/07/25 12:50:01 by sait-amm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC = philo.c ft_atoi.c parting.c routine.c tools.c init_function.c
+SRC = philo.c \
+		ft_atoi.c \
+		parting.c \
+		routine.c \
+		tools.c \
+		init_function.c \
+		monitor.c
 
 
 OBJF = $(SRC:.c=.o)
@@ -21,7 +27,7 @@ NAME = philo
 
 C = cc
 
-CFLAGS = -Wall -Werror -Wextra -O3 -pthread #-fsanitize=address -g
+CFLAGS =  -Wall -Werror -Wextra -O3 -pthread #-fsanitize=address -g  -g 
 
 all: $(NAME)
 

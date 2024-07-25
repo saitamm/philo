@@ -6,24 +6,34 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 09:52:33 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/07/22 12:38:56 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/07/25 12:21:25 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int main(int ac , char **av)
+void	alloc_init(t_data *data, t_argv nbr)
 {
-	t_argv		nbr;
-	t_philo		philo[MAX_PHILO];
-	t_mtx		fork[MAX_PHILO];
-	t_table		t;
-	
+	data->philo = (t_philo *)malloc(nbr.nmbr_philo * sizeof(t_philo));
+	data->forks = (t_mtx *)malloc(nbr.nmbr_philo * sizeof(t_mtx));
+	data->tid = (pthread_t *)malloc(nbr.nmbr_philo * sizeof(pthread_t));
+	pthread_mutex_init(&data->dead_mutex, NULL);
+	pthread_mutex_init(&data->eat_mutex, NULL);
+	pthread_mutex_init(&data->write_mutex, NULL);
+}
+
+
+int	main(int ac, char **av)
+{
+	t_argv nbr;
+	t_data data;
+
 	if (ft_content(av, ac) == 1)
 		exit(1);
 	initial_nbr(av, &nbr, ac);
-	init_table(&t, philo);
-	init_fork(fork, nbr);
-	init_philo(fork, philo, nbr, &t);
-	init_threads(philo, nbr);
+	alloc_init(&data, nbr);
+	init_fork(&data, nbr);
+	init_philo(&data, nbr);
+	init_threads(&data, nbr);
+	return (0);
 }

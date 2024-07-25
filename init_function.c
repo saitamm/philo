@@ -6,89 +6,112 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 10:43:11 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/07/22 15:06:23 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/07/25 13:12:55 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	init_table(t_table *t, t_philo *philo)
-{
-	t->flag = 0;
-	t->philo = philo;
-	pthread_mutex_init(&t->deal_mutex, NULL);
-	pthread_mutex_init(&t->eat_mutex, NULL);
-	pthread_mutex_init(&t->write_mutex, NULL);
-}
-
-void	init_fork(t_mtx *fork, t_argv nbr)
+void	init_fork(t_data *data, t_argv nbr)
 {
 	int	i;
 
 	i = 0;
 	while (i < nbr.nmbr_philo)
 	{
-		pthread_mutex_init(&fork[i], NULL);
+		pthread_mutex_init(&data->forks[i], NULL);
 		i++;
 	}
-}
-
-void    initial_nbr(char **av, t_argv *nbr, int ac)
-{
-    nbr->nmbr_philo = ft_atoi(av[1]);
-    nbr->time_to_die = ft_atoi(av[2]);
-    nbr->time_to_eat = ft_atoi(av[3]);
-    nbr->time_to_sleep = ft_atoi(av[4]);
-    if (ac == 5)
-        nbr->nbr = -1;
-    else
-        nbr->nbr = ft_atoi(av[5]);
-    
-}
-
-void	init_philo(t_mtx *fork, t_philo *philo, t_argv nbr, t_table *t)
-{
-	int	i;
-
 	i = 0;
 	while (i < nbr.nmbr_philo)
 	{
-		philo[i].id = i + 1;
-		philo[i].time_to_die = nbr.time_to_die;
-		philo[i].time_to_eat = nbr.time_to_eat;
-		philo[i].time_to_sleep = nbr.time_to_sleep;
-		philo[i].count_meal = 0;
-		philo[i].start_time = get_time();
-		philo[i].flag = 0;
-		philo[i].eat_mutex = &t->eat_mutex;
-		philo[i].deal_mutex = &t->deal_mutex;
-		philo[i].write_mutex = &t->write_mutex;
-		philo[i].l_fork = &fork[i];
-		philo[i].nmbr = nbr.nmbr_philo;
+		data->philo[i].l_fork = &data->forks[i];
 		if (i == 0)
-			philo[i].r_fork = &fork[0];
+			data->philo[i].r_fork = &data->forks[nbr.nmbr_philo - 1];
 		else
-			philo[i].r_fork = &fork[i-1]; 
+			data->philo[i].r_fork = &data->forks[i - 1];
 		i++;
 	}
 }
 
-void	init_threads(t_philo *philo, t_argv nbr)
+void	initial_nbr(char **av, t_argv *nbr, int ac)
+{
+	nbr->nmbr_philo = ft_atoi(av[1]);
+	nbr->time_to_die = ft_atoi(av[2]);
+	nbr->time_to_eat = ft_atoi(av[3]);
+	nbr->time_to_sleep = ft_atoi(av[4]);
+	if (ac == 5)
+		nbr->nbr = -1;
+	else
+		nbr->nbr = ft_atoi(av[5]);
+}
+
+void	init_philo(t_data *data, t_argv nbr)
 {
 	int	i;
 
 	i = 0;
-	while(i < nbr.nmbr_philo)
-	{
-		if (pthread_create(philo[i].t, NULL, routine, NULL) !=0)
-			printf("::::::::::::::::::\n");
-		i++;
-	}
-	i = 0;
 	while (i < nbr.nmbr_philo)
 	{
-		if (pthread_join(philo[i].t, NULL) != 0)
-			printf("*******************\n");
+		data->philo[i].id = i + 1;
+		data->philo[i].time_to_die = nbr.time_to_die;
+		data->philo[i].time_to_eat = nbr.time_to_eat;
+		data->philo[i].time_to_sleep = nbr.time_to_sleep;
+		data->philo[i].nbr_philo = nbr.nmbr_philo;
+		data->philo[i].count_meal = 0;
+		data->philo[i].start_time = get_time();
+		data->philo[i].last_meal = get_time();
+		data->philo[i].flag_eating = 0;
+		data->philo[i].flag = 0;
+		data->philo[i].nbr_finished = 0;
+		data->philo[i].eat_mutex = &data->eat_mutex;
+		data->philo[i].dead_mutex = &data->dead_mutex;
+		data->philo[i].write_mutex = &data->write_mutex;
+		data->philo[i].nmbr = nbr.nmbr_philo;
+		data->philo[i].nmbr_meal = nbr.nbr;
+		i++;
+	}
+}
+
+void	error(t_data *data, char *str, int i)
+{
+	printf("%s\n", str);
+	free(data->forks);
+	free(data->tid);
+	while ( i > 0)
+	{
+		free(data->philo);
+		i--;
+	}
+}
+void	init_threads(t_data *data, t_argv nbr)
+{
+	int i;
+	pthread_t monit;
+
+	i = 0;
+	if (pthread_create(&monit, NULL, &monitor, data->philo) != 0)
+	{
+		printf("Error message\n");
+		return ;
+	}
+	while (i < nbr.nmbr_philo)
+	{
+		if (pthread_create(&data->tid[i], NULL, &routine, &data->philo[i]) != 0)
+			error(data, "Error in creation of threads", i);
+		i++;
+	}
+
+	i = 0;
+	if (pthread_join(monit, NULL) != 0)
+	{
+		printf(":::Error message\n");
+		return ;
+	}
+	while (i < nbr.nmbr_philo)
+	{
+		if (pthread_join(data->tid[i], NULL) != 0)
+			error(data, "errr in jin of threads", i);
 		i++;
 	}
 }
