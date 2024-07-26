@@ -73,7 +73,7 @@ void					init_threads(t_data *data, t_argv nbr);
 
 // routine and actions
 
-void					eat(t_philo *philo);
+int						eat(t_philo *philo);
 void					think(t_philo *philo);
 void					*routine(void *arg);
 void					ft_sleep(t_philo *philo);
@@ -92,5 +92,7 @@ int						philosophers_dead(t_philo *philo);
 size_t					get_time(void);
 void					print_message(char *str, t_philo *philo);
 int						ft_usleep(size_t milliseconds);
+void					destory_all(char *str, t_data *data, pthread_mutex_t *forks);
+size_t					ft_strlen(char *str);
 
 #endif

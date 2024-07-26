@@ -6,7 +6,7 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 10:43:11 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/07/25 13:12:55 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/07/26 12:04:30 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,10 @@ void	init_threads(t_data *data, t_argv nbr)
 	while (i < nbr.nmbr_philo)
 	{
 		if (pthread_join(data->tid[i], NULL) != 0)
-			error(data, "errr in jin of threads", i);
+		{
+			error(data, "errr in join of threads", i);
+		}
+			printf("****************\n");
 		i++;
 	}
 }
