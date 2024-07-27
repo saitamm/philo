@@ -6,7 +6,7 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 15:55:05 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/07/26 11:05:05 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/07/27 12:19:55 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,9 @@ void	print_message(char *str, t_philo *philo)
 		printf("%zu %d is died soumaya\n", time, philo->id);
 		philo->flag = 1;
 		pthread_mutex_unlock(philo->write_mutex);
+		pthread_mutex_lock(&philo->data->dead_mutex);
+		philo->data->dead_flag = 1;
+		pthread_mutex_unlock(&philo->data->dead_mutex);
 		philo->nbr_finished++;
 		return ;
 	}
@@ -54,22 +57,21 @@ void	print_message(char *str, t_philo *philo)
 	pthread_mutex_unlock(philo->write_mutex);
 }
 
-void	destory_all(char *str, t_data *data, pthread_mutex_t *forks)
+void	destory_all( t_data *data)
 {
 	int	i;
 
 	i = 0;
-	if (str)
-	{
-		write(2, str, ft_strlen(str));
-		write(2, "\n", 1);
-	}
+	
 	pthread_mutex_destroy(&data->write_mutex);
 	pthread_mutex_destroy(&data->eat_mutex);
 	pthread_mutex_destroy(&data->dead_mutex);
 	while (i < data->philo[0].nmbr)
 	{
-		pthread_mutex_destroy(&forks[i]);
+		pthread_mutex_destroy(&data->forks[i]);
 		i++;
 	}
+	free(data->forks);
+	free(data->philo);
+	free(data->tid);
 }

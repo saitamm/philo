@@ -6,7 +6,7 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 10:43:11 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/07/26 12:04:30 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/07/27 12:26:28 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,9 @@ void	init_philo(t_data *data, t_argv nbr)
 	while (i < nbr.nmbr_philo)
 	{
 		data->philo[i].id = i + 1;
-		data->philo[i].time_to_die = nbr.time_to_die;
-		data->philo[i].time_to_eat = nbr.time_to_eat;
-		data->philo[i].time_to_sleep = nbr.time_to_sleep;
-		data->philo[i].nbr_philo = nbr.nmbr_philo;
+		data->time_to_die = nbr.time_to_die;
+		data->time_to_eat = nbr.time_to_eat;
+		data->time_to_sleep = nbr.time_to_sleep;
 		data->philo[i].count_meal = 0;
 		data->philo[i].start_time = get_time();
 		data->philo[i].last_meal = get_time();
@@ -69,6 +68,7 @@ void	init_philo(t_data *data, t_argv nbr)
 		data->philo[i].write_mutex = &data->write_mutex;
 		data->philo[i].nmbr = nbr.nmbr_philo;
 		data->philo[i].nmbr_meal = nbr.nbr;
+		data->philo[i].data = data;
 		i++;
 	}
 }
@@ -102,6 +102,9 @@ void	init_threads(t_data *data, t_argv nbr)
 		i++;
 	}
 
+	
+
+
 	i = 0;
 	if (pthread_join(monit, NULL) != 0)
 	{
@@ -114,7 +117,7 @@ void	init_threads(t_data *data, t_argv nbr)
 		{
 			error(data, "errr in join of threads", i);
 		}
-			printf("****************\n");
+		printf(":::::::::::::\n");
 		i++;
 	}
 }

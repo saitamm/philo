@@ -6,7 +6,7 @@
 #    By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/12 09:51:25 by sait-amm          #+#    #+#              #
-#    Updated: 2024/07/26 11:45:09 by sait-amm         ###   ########.fr        #
+#    Updated: 2024/07/27 12:17:56 by sait-amm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ NAME = philo
 
 C = cc
 
-CFLAGS =  -Wall -Werror -Wextra -O3 -pthread -g #-fsanitize=address -g  -g 
+CFLAGS =  -Wall -Werror -Wextra -O3 -fsanitize=address -g #-pthread -g   -g 
 
 all: $(NAME)
 
