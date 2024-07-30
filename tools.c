@@ -39,11 +39,11 @@ int	ft_usleep(size_t milliseconds)
 void	print_message(char *str, t_philo *philo)
 {
 	size_t	time;
+
 	pthread_mutex_lock(philo->write_mutex);
 	time = get_time() - philo->start_time;
 	if (check_dead(philo))
 	{
-
 		printf("%zu %d is died soumaya\n", time, philo->id);
 		philo->flag = 1;
 		pthread_mutex_unlock(philo->write_mutex);
@@ -57,12 +57,11 @@ void	print_message(char *str, t_philo *philo)
 	pthread_mutex_unlock(philo->write_mutex);
 }
 
-void	destory_all( t_data *data)
+void	destory_all(t_data *data)
 {
 	int	i;
 
 	i = 0;
-	
 	pthread_mutex_destroy(&data->write_mutex);
 	pthread_mutex_destroy(&data->eat_mutex);
 	pthread_mutex_destroy(&data->dead_mutex);

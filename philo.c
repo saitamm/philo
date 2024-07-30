@@ -6,7 +6,7 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 09:52:33 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/07/27 10:28:32 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/07/30 10:39:40 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	alloc_init(t_data *data, t_argv nbr)
 	pthread_mutex_init(&data->write_mutex, NULL);
 }
 
-
 int	main(int ac, char **av)
 {
 	t_argv nbr;
@@ -35,6 +34,6 @@ int	main(int ac, char **av)
 	init_fork(&data, nbr);
 	init_philo(&data, nbr);
 	init_threads(&data, nbr);
-	destory_all(&data);
+	// destory_all(&data);
 	return (0);
 }

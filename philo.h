@@ -12,7 +12,7 @@
 
 typedef pthread_mutex_t	t_mtx;
 
-struct	s_data;
+struct s_data;
 
 typedef struct e_argv
 {
@@ -25,30 +25,30 @@ typedef struct e_argv
 
 typedef struct s_philo
 {
-	int flag_eating;      // if thread was eating flag_eating = 1;
-	int count_meal;       // every time thread will eat count_meal will crement
-	size_t start_time;    // time the thread will start ear
-	size_t last_meal;     // last time thread was eat a meal
-	t_mtx *r_fork;        // right fork of philo
-	t_mtx *l_fork;        // left fork of philo
-	t_mtx *dead_mutex;    // mutex of dead
-	t_mtx *eat_mutex;     // mutex of eat
-	t_mtx *write_mutex;   // mutex of write
-	pthread_t t;          // thread
-	int nmbr;             // number f philo input
-	int id;               // id f philo start in 1
-	int	nbr_finished;
-	int flag;
-	int	nmbr_meal;
-	struct	s_data *data;
+	int flag_eating;    // if thread was eating flag_eating = 1;
+	int count_meal;     // every time thread will eat count_meal will crement
+	size_t start_time;  // time the thread will start ear
+	size_t last_meal;   // last time thread was eat a meal
+	t_mtx *r_fork;      // right fork of philo
+	t_mtx *l_fork;      // left fork of philo
+	t_mtx *dead_mutex;  // mutex of dead
+	t_mtx *eat_mutex;   // mutex of eat
+	t_mtx *write_mutex; // mutex of write
+	pthread_t t;        // thread
+	int nmbr;           // number f philo input
+	int id;             // id f philo start in 1
+	int					nbr_finished;
+	int					flag;
+	int					nmbr_meal;
+	struct s_data		*data;
 }						t_philo;
 
 typedef struct s_data
 {
 	int					dead_flag;
-	size_t time_to_die;
-	size_t time_to_sleep;
-	size_t time_to_eat;
+	size_t				time_to_die;
+	size_t				time_to_sleep;
+	size_t				time_to_eat;
 	t_mtx				dead_mutex;
 	t_mtx				eat_mutex;
 	t_mtx				write_mutex;

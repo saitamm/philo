@@ -33,23 +33,22 @@ int	philosophers_dead(t_philo *philo)
 	return (0);
 }
 
-int all_eat(t_philo *philo)
+int	all_eat(t_philo *philo)
 {
-    if (philo->count_meal == philo->nmbr_meal && philo->nmbr_meal != -1)
-        return(1);
-    return (0);
+	if (philo->count_meal == philo->nmbr_meal && philo->nmbr_meal != -1)
+		return (1);
+	return (0);
 }
 
 void	*monitor(void *arg)
 {
 	t_data	*philo;
 
-	philo = (t_data*)arg;
+	philo = (t_data *)arg;
 	while (1)
 	{
 		if (philosophers_dead(philo->philo) == 1 || philo->dead_flag == 1)
-			break;
+			break ;
 	}
-
 	return (philo);
 }
