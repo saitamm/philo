@@ -6,7 +6,7 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 10:43:11 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/07/30 10:44:43 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/08/02 10:57:55 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,20 +87,25 @@ void	error(t_data *data, char *str, int i)
 void	init_threads(t_data *data, t_argv nbr)
 {
 	int i;
+	pthread_t monit;
 
 	i = 0;
+	if (pthread_create(&monit, NULL, &monitor, data) != 0)
+	{
+		printf("Error message\n");
+		return ;
+	}
 	while (i < nbr.nmbr_philo)
 	{
 		if (pthread_create(&data->tid[i], NULL, &routine, &data->philo[i]) != 0)
 			error(data, "Error in creation of threads", i);
 		i++;
 	}
-	while (1)
+	if (pthread_join(monit, NULL) != 0)
 	{
-		if (philosophers_dead(data->philo) == 1 || data->dead_flag == 1)
-			break;
+		printf(":::Error message\n");
+		return ;
 	}
-	i = 0;
 	while (i < nbr.nmbr_philo)
 	{
 		if (pthread_join(data->tid[i], NULL) != 0)

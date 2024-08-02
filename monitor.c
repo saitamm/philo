@@ -6,7 +6,7 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 13:09:49 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/07/27 12:21:20 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/08/02 16:16:26 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,13 @@ int	philosophers_dead(t_philo *philo)
 	i = 0;
 	while (i < philo[0].nmbr)
 	{
+		// printf("::::%d\n", philo[i].flag_eating);
 		if (get_time() - philo[i].last_meal >= philo[i].data->time_to_eat
 			&& philo[i].flag_eating == 1)
 		{
 			print_message("died", philo);
 			pthread_mutex_lock(philo[0].dead_mutex);
-			philo[i].flag = 1;
+			philo[i].data->dead_flag = 1;
 			pthread_mutex_unlock(philo[0].dead_mutex);
 			return (1);
 		}
@@ -42,13 +43,14 @@ int	all_eat(t_philo *philo)
 
 void	*monitor(void *arg)
 {
-	t_data	*philo;
+	t_data	*data;
 
-	philo = (t_data *)arg;
+	data = (t_data *)arg;
 	while (1)
 	{
-		if (philosophers_dead(philo->philo) == 1 || philo->dead_flag == 1)
+		// printf("::::::::::%d         %d\n", philosophers_dead(data->philo),data->philo[0].data->dead_flag);
+		if (philosophers_dead(data->philo) == 1 || data->philo[0].data->dead_flag == 1)
 			break ;
 	}
-	return (philo);
+	return (data);
 }

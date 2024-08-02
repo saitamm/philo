@@ -6,7 +6,7 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 15:55:05 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/07/27 12:19:55 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/08/02 16:17:01 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	print_message(char *str, t_philo *philo)
 	time = get_time() - philo->start_time;
 	if (check_dead(philo))
 	{
-		printf("%zu %d is died soumaya\n", time, philo->id);
+		printf("%zu %d is died\n", time, philo->id);
 		philo->flag = 1;
 		pthread_mutex_unlock(philo->write_mutex);
 		pthread_mutex_lock(&philo->data->dead_mutex);
