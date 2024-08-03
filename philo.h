@@ -10,6 +10,13 @@
 
 # define MAX_PHILO 200
 
+#define WR_NB "wrong of argument number\n"
+#define IN_PN "Invalid philosophers number\n"
+#define TIME_DIE "Invalid time to die\n"
+#define TIME_EAT "Invalid time to eat\n"
+#define TIME_SLEEP "Invalid time to sleep\n"
+#define MEAL "Invalid number of times each philosopher must eat\n"
+#define DEAD "died"
 typedef pthread_mutex_t	t_mtx;
 
 struct s_data;

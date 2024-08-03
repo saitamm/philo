@@ -6,7 +6,7 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 13:09:49 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/08/02 16:16:26 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/08/03 16:20:29 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ int	philosophers_dead(t_philo *philo)
 	while (i < philo[0].nmbr)
 	{
 		// printf("::::%d\n", philo[i].flag_eating);
-		if (get_time() - philo[i].last_meal >= philo[i].data->time_to_eat
+		if (get_time() - philo[i].last_meal >= philo[i].data->time_to_die
 			&& philo[i].flag_eating == 1)
 		{
-			print_message("died", philo);
+			print_message(DEAD, philo);
 			pthread_mutex_lock(philo[0].dead_mutex);
 			philo[i].data->dead_flag = 1;
 			pthread_mutex_unlock(philo[0].dead_mutex);

@@ -6,7 +6,7 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 10:36:57 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/08/02 16:53:04 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/08/03 16:20:29 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	check_dead(t_philo *philo)
 	pthread_mutex_lock(philo->dead_mutex);
 	if (t == 1)
 	{
-		print_message("died", philo);
+		print_message(DEAD, philo);
 		pthread_mutex_unlock(philo->dead_mutex);
 		return (1);
 	}
@@ -32,9 +32,9 @@ int	eat(t_philo *philo)
 	pthread_mutex_t	*first_fork;
 	pthread_mutex_t	*second_fork;
 
+	// if (philo->id % 2 == 0)
+	// 	usleep(1);
 	if (philo->id % 2 == 0)
-		usleep(1);
-	if (philo->r_fork < philo->l_fork)
 	{
 		first_fork = philo->r_fork;
 		second_fork = philo->l_fork;
@@ -48,7 +48,7 @@ int	eat(t_philo *philo)
 	print_message("has taken a fork", philo);
 	if (philo->nmbr == 1)
 	{
-		print_message("died", philo);
+		print_message(DEAD, philo);
 		pthread_mutex_unlock(first_fork);
 		philo->nbr_finished++;
 		pthread_mutex_lock(&philo->data->dead_mutex);
@@ -63,9 +63,9 @@ int	eat(t_philo *philo)
 	print_message("is eating", philo);
 	philo->flag_eating = 1;
 	philo->count_meal++;
-	ft_usleep(philo->data->time_to_eat);
-	pthread_mutex_unlock(philo->eat_mutex);
 	philo->last_meal = get_time();
+	pthread_mutex_unlock(philo->eat_mutex);
+	ft_usleep(philo->data->time_to_eat);
 	philo->flag_eating = 0;
 	pthread_mutex_unlock(second_fork);
 	pthread_mutex_unlock(first_fork);
