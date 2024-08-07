@@ -6,7 +6,7 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 12:28:07 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/08/03 15:40:50 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/08/07 16:42:21 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,12 @@ int	ft_check(char *av)
 	}
 	return (0);
 }
+
 void	error_input(char *str)
 {
 	write(2, str, ft_strlen(str));
 }
+
 int	ft_content(char **av, int ac)
 {
 	if (ac != 5 && ac != 6)
@@ -50,6 +52,6 @@ int	ft_content(char **av, int ac)
 	if (ft_atoi(av[4]) <= 0 || ft_check(av[4]) == 1)
 		return (error_input(TIME_SLEEP), 1);
 	if (av[5] && (ft_atoi(av[5]) < 0 || ft_check(av[5]) == 1))
-		return (error_input(MEAL),1);
+		return (error_input(MEAL), 1);
 	return (0);
 }

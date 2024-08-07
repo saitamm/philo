@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/07 16:44:45 by sait-amm          #+#    #+#             */
+/*   Updated: 2024/08/07 16:50:52 by sait-amm         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_H
 # define PHILO_H
 
@@ -10,16 +22,17 @@
 
 # define MAX_PHILO 200
 
-#define WR_NB "wrong of argument number\n"
-#define IN_PN "Invalid philosophers number\n"
-#define TIME_DIE "Invalid time to die\n"
-#define TIME_EAT "Invalid time to eat\n"
-#define TIME_SLEEP "Invalid time to sleep\n"
-#define MEAL "Invalid number of times each philosopher must eat\n"
-#define DEAD "died"
+# define WR_NB "wrong of argument number\n"
+# define IN_PN "Invalid philosophers number\n"
+# define TIME_DIE "Invalid time to die\n"
+# define TIME_EAT "Invalid time to eat\n"
+# define TIME_SLEEP "Invalid time to sleep\n"
+# define MEAL "Invalid number of times each philosopher must eat\n"
+# define DEAD "died"
+
 typedef pthread_mutex_t	t_mtx;
 
-struct s_data;
+struct					s_data;
 
 typedef struct e_argv
 {
@@ -32,18 +45,18 @@ typedef struct e_argv
 
 typedef struct s_philo
 {
-	int flag_eating;    // if thread was eating flag_eating = 1;
-	int count_meal;     // every time thread will eat count_meal will crement
-	size_t start_time;  // time the thread will start ear
-	size_t last_meal;   // last time thread was eat a meal
-	t_mtx *r_fork;      // right fork of philo
-	t_mtx *l_fork;      // left fork of philo
-	t_mtx *dead_mutex;  // mutex of dead
-	t_mtx *eat_mutex;   // mutex of eat
-	t_mtx *write_mutex; // mutex of write
-	pthread_t t;        // thread
-	int nmbr;           // number f philo input
-	int id;             // id f philo start in 1
+	int					flag_eating;
+	int					count_meal;
+	size_t				start_time;
+	size_t				last_meal;
+	t_mtx				*r_fork;
+	t_mtx				*l_fork;
+	t_mtx				*dead_mutex;
+	t_mtx				*eat_mutex;
+	t_mtx				*write_mutex;
+	pthread_t			t;
+	int					nmbr;
+	int					id;
 	int					nbr_finished;
 	int					flag;
 	int					nmbr_meal;

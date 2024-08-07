@@ -14,7 +14,7 @@
 
 int	check_dead(t_philo *philo)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < philo->nmbr)
@@ -29,6 +29,7 @@ int	eat(t_philo *philo)
 {
 	pthread_mutex_t	*first_fork;
 	pthread_mutex_t	*second_fork;
+
 	if (philo->id % 2 == 0)
 	{
 		first_fork = philo->r_fork;
@@ -86,7 +87,7 @@ void	*routine(void *arg)
 	philo = (t_philo *)arg;
 	while (1)
 	{
-		if (eat(philo) ||philo->data->dead_flag == 1)
+		if (eat(philo) || philo->data->dead_flag == 1)
 			break ;
 		think(philo);
 		ft_sleep(philo);

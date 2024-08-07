@@ -6,7 +6,7 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 09:52:33 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/08/07 16:14:32 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/08/07 16:43:06 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void	alloc_init(t_data *data, t_argv nbr)
 
 int	main(int ac, char **av)
 {
-	t_argv nbr;
-	t_data data;
+	t_argv	nbr;
+	t_data	data;
 
 	if (ft_content(av, ac) == 1)
 		exit(1);

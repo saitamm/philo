@@ -6,7 +6,7 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 13:09:49 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/08/07 16:26:05 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/08/07 16:54:10 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	philosophers_dead(t_philo *philo)
 	i = 0;
 	while (i < philo[0].nmbr)
 	{
-		// printf("::::%d\n", philo[i].flag_eating);
 		if (get_time() - philo[i].last_meal >= philo[i].data->time_to_die
 			&& philo[i].flag_eating == 1)
 		{
@@ -37,11 +36,13 @@ int	philosophers_dead(t_philo *philo)
 
 int	all_eat(t_philo *philo)
 {
-	int i;
+	int	i;
+
 	i = 0;
 	while (i < philo[0].nmbr)
 	{
-		if (philo[i].count_meal == philo[i].nmbr_meal && philo[i].nmbr_meal != -1)
+		if (philo[i].count_meal == philo[i].nmbr_meal
+			&& philo[i].nmbr_meal != -1)
 			return (1);
 		i++;
 	}
@@ -55,8 +56,8 @@ void	*monitor(void *arg)
 	data = (t_data *)arg;
 	while (1)
 	{
-		
-		if (philosophers_dead(data->philo) == 1 || data->philo[0].data->dead_flag == 1 || all_eat(data->philo))
+		if (philosophers_dead(data->philo) == 1
+			|| data->philo[0].data->dead_flag == 1 || all_eat(data->philo))
 			break ;
 	}
 	return (data);
