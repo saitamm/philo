@@ -6,7 +6,7 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 10:36:57 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/08/03 16:20:29 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/08/07 15:46:17 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,21 @@
 
 int	check_dead(t_philo *philo)
 {
-	int	t;
+	int i;
 
-	t = philo->flag;
-	pthread_mutex_lock(philo->dead_mutex);
-	if (t == 1)
+	i = 0;
+	while (i < philo->nmbr)
 	{
-		print_message(DEAD, philo);
-		pthread_mutex_unlock(philo->dead_mutex);
-		return (1);
+		if (philo->data->philo[i].flag == 1)
+			return (1);
+		i++;
 	}
-	pthread_mutex_unlock(philo->dead_mutex);
 	return (0);
 }
 int	eat(t_philo *philo)
 {
 	pthread_mutex_t	*first_fork;
 	pthread_mutex_t	*second_fork;
-
-	// if (philo->id % 2 == 0)
-	// 	usleep(1);
 	if (philo->id % 2 == 0)
 	{
 		first_fork = philo->r_fork;
@@ -91,7 +86,7 @@ void	*routine(void *arg)
 	philo = (t_philo *)arg;
 	while (1)
 	{
-		if (eat(philo))
+		if (eat(philo) ||philo->data->dead_flag == 1)
 			break ;
 		think(philo);
 		ft_sleep(philo);
