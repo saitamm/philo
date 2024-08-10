@@ -6,7 +6,7 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 10:43:11 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/08/07 16:53:29 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/08/10 19:20:54 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ void	init_threads(t_data *data, t_argv nbr)
 		write(2, "error mssg", 11);
 		return ;
 	}
+	i = 0;
 	while (i < nbr.nmbr_philo)
 	{
 		if (pthread_join(data->tid[i], NULL) != 0)

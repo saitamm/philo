@@ -6,7 +6,7 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 10:36:57 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/08/08 11:42:09 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/08/10 19:43:46 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int	eat(t_philo *philo)
 	pthread_mutex_t	*first_fork;
 	pthread_mutex_t	*second_fork;
 
-	if (philo->id % 2 == 0)
-		usleep(1);
+	// if (philo->id % 2 == 0)
+	// 	usleep(1);
 	if (philo->id % 2 == 0)
 	{
 		first_fork = philo->r_fork;
@@ -78,8 +78,7 @@ void	think(t_philo *philo)
 void	ft_sleep(t_philo *philo)
 {
 	print_message("is sleeping", philo);
-	// while (check_dead(philo))
-	// 	sleep(500);
+	ft_usleep(philo->data->time_to_sleep);
 }
 
 void	*routine(void *arg)
