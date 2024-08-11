@@ -6,7 +6,7 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 15:55:05 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/08/10 19:38:14 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/08/11 10:34:04 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,15 @@ void	print_message(char *str, t_philo *philo)
 {
 	size_t	time;
 
-	pthread_mutex_lock(philo->write_mutex);
+	pthread_mutex_lock(&philo->data->write_mutex);
 	time = get_time() - philo->start_time;
 	if (check_dead(philo))
 	{
-		pthread_mutex_unlock(philo->write_mutex);
+		pthread_mutex_unlock(&philo->data->write_mutex);
 		return ;
 	}
 	printf("%zu %d %s\n", time, philo->id, str);
-	pthread_mutex_unlock(philo->write_mutex);
+	pthread_mutex_unlock(&philo->data->write_mutex);
 }
 
 void	destory_all(t_data *data)
@@ -57,8 +57,9 @@ void	destory_all(t_data *data)
 
 	i = 0;
 	pthread_mutex_destroy(&data->write_mutex);
-	pthread_mutex_destroy(&data->eat_mutex);
+	// pthread_mutex_destroy(&data->eat_mutex);
 	pthread_mutex_destroy(&data->dead_mutex);
+	pthread_mutex_destroy(&data->meal_mutex);
 	while (i < data->philo[0].nmbr)
 	{
 		pthread_mutex_destroy(&data->forks[i]);

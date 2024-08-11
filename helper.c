@@ -6,7 +6,7 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 11:42:57 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/08/07 16:37:30 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/08/11 09:57:39 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 size_t	ft_strlen(char *str)
 {
-	size_t	i;
+	size_t	k;
 
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
+	k = 0;
+	while (str[k])
+		k++;
+	return (k);
 }

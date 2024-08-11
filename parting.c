@@ -6,15 +6,15 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 12:28:07 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/08/07 16:42:21 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/08/11 09:57:16 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_is_not_digit(char c)
+int	ft_is_not_digit(char a)
 {
-	if (!(c >= '0' && c <= '9'))
+	if (!(a >= '0' && a <= '9'))
 		return (1);
 	return (0);
 }

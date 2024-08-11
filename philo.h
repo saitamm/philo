@@ -6,7 +6,7 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:44:45 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/08/07 16:50:52 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/08/11 10:33:19 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,12 @@ typedef struct s_philo
 	size_t				last_meal;
 	t_mtx				*r_fork;
 	t_mtx				*l_fork;
-	t_mtx				*dead_mutex;
-	t_mtx				*eat_mutex;
-	t_mtx				*write_mutex;
 	pthread_t			t;
 	int					nmbr;
 	int					id;
-	int					nbr_finished;
 	int					flag;
 	int					nmbr_meal;
+	int					nbr_finished;
 	struct s_data		*data;
 }						t_philo;
 
@@ -70,8 +67,9 @@ typedef struct s_data
 	size_t				time_to_sleep;
 	size_t				time_to_eat;
 	t_mtx				dead_mutex;
-	t_mtx				eat_mutex;
+	// t_mtx				eat_mutex;
 	t_mtx				write_mutex;
+	t_mtx				meal_mutex;
 	t_philo				*philo;
 	t_mtx				*forks;
 	pthread_t			*tid;
