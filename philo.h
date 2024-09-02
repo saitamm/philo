@@ -6,7 +6,7 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:44:45 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/09/02 11:01:11 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/09/02 17:06:31 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,5 +115,8 @@ void					print_message(char *str, t_philo *philo);
 int						ft_usleep(size_t milliseconds);
 void					destory_all(t_data *data);
 size_t					ft_strlen(char *str);
+int						check_one_philo(t_philo *philo);
+void					take_fork(t_mtx **first, t_mtx **second,
+							t_philo *philo);
 
 #endif

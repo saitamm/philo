@@ -6,7 +6,7 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 10:36:57 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/09/02 11:19:45 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/09/02 17:04:50 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,47 +19,33 @@ int	check_dead(t_philo *philo)
 	i = 0;
 	while (i < philo->nmbr)
 	{
+		pthread_mutex_lock(&philo[0].data->dead_mutex);
 		if (philo->data->philo[i].flag == 1)
+		{
+			pthread_mutex_unlock(&philo[0].data->dead_mutex);
 			return (1);
+		}
+		pthread_mutex_unlock(&philo[0].data->dead_mutex);
 		i++;
 	}
 	return (0);
 }
+
 int	eat(t_philo *philo)
 {
 	pthread_mutex_t	*first_fork;
 	pthread_mutex_t	*second_fork;
 
-	// if (philo->id % 2 == 0)
-	// 	usleep(1);
-	if (philo->id % 2 == 0)
-	{
-		first_fork = philo->r_fork;
-		second_fork = philo->l_fork;
-	}
-	else
-	{
-		first_fork = philo->l_fork;
-		second_fork = philo->r_fork;
-	}
+	take_fork(&first_fork, &second_fork, philo);
 	pthread_mutex_lock(first_fork);
 	print_message("has taken a fork", philo);
-	if (philo->nmbr == 1)
-	{
-		print_message(DEAD, philo);
-		pthread_mutex_unlock(first_fork);
-		// // philo->nbr_finished++;
-		// pthread_mutex_lock(&philo->data->dead_mutex);
-		// philo->data->dead_flag = 1;
-		// pthread_mutex_unlock(&philo->data->dead_mutex);
-		// philo->flag = 1;
-		return (1);
-	}
+	if (!check_one_philo(philo))
+		return (pthread_mutex_unlock(first_fork), 1);
 	pthread_mutex_lock(second_fork);
 	print_message("has taken a fork", philo);
 	philo->flag_eating = 1;
 	pthread_mutex_lock(&philo->data->meal_mutex);
-	print_message("is eating",philo);
+	print_message("is eating", philo);
 	pthread_mutex_lock(&philo->data->time_mutex);
 	philo->last_meal = get_time();
 	pthread_mutex_unlock(&philo->data->time_mutex);
@@ -90,12 +76,17 @@ void	*routine(void *arg)
 	philo = (t_philo *)arg;
 	while (1)
 	{
-
 		if (eat(philo))
 			break ;
+		pthread_mutex_lock(&philo->data->dead_mutex);
+		if (philo->flag == 1)
+		{
+			pthread_mutex_unlock(&philo->data->dead_mutex);
+			break ;
+		}
+		pthread_mutex_unlock(&philo->data->dead_mutex);
 		think(philo);
 		ft_sleep(philo);
-
 	}
 	return (NULL);
 }
