@@ -6,7 +6,7 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:44:45 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/08/11 10:33:19 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/09/02 11:01:11 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ typedef struct s_data
 	size_t				time_to_sleep;
 	size_t				time_to_eat;
 	t_mtx				dead_mutex;
-	// t_mtx				eat_mutex;
 	t_mtx				write_mutex;
+	t_mtx				time_mutex;
 	t_mtx				meal_mutex;
 	t_philo				*philo;
 	t_mtx				*forks;

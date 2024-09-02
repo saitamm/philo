@@ -6,7 +6,7 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 15:55:05 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/08/11 10:34:04 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/09/02 11:19:01 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,15 @@ void	print_message(char *str, t_philo *philo)
 {
 	size_t	time;
 
-	pthread_mutex_lock(&philo->data->write_mutex);
+	
+    pthread_mutex_lock(&philo->data->time_mutex);
 	time = get_time() - philo->start_time;
+	pthread_mutex_unlock(&philo->data->time_mutex);
+	pthread_mutex_lock(&philo->data->write_mutex);
 	if (check_dead(philo))
 	{
 		pthread_mutex_unlock(&philo->data->write_mutex);
+		// pthread_mutex_unlock(&philo->data->time_mutex);
 		return ;
 	}
 	printf("%zu %d %s\n", time, philo->id, str);

@@ -6,7 +6,7 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 09:52:33 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/08/11 10:33:09 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/09/02 11:08:17 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	alloc_init(t_data *data, t_argv nbr)
 	pthread_mutex_init(&data->dead_mutex, NULL);
 	pthread_mutex_init(&data->write_mutex, NULL);
 	pthread_mutex_init(&data->meal_mutex, NULL);
+	pthread_mutex_init(&data->time_mutex, NULL);
 }
 
 int	main(int ac, char **av)

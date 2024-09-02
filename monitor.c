@@ -6,7 +6,7 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 13:09:49 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/08/11 10:33:47 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/09/02 11:22:23 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	philosophers_dead(t_philo *philo)
 	i = 0;
 	while (i < philo[0].nmbr)
 	{
+		pthread_mutex_lock(&philo[0].data->time_mutex);
 		if (get_time() - philo[i].last_meal >= philo[i].data->time_to_die
 			&& philo[i].flag_eating == 1)
 		{
@@ -27,8 +28,10 @@ int	philosophers_dead(t_philo *philo)
 			philo[i].flag = 1;
 			philo[i].data->dead_flag = 1;
 			pthread_mutex_unlock(&philo[0].data->dead_mutex);
+			pthread_mutex_unlock(&philo[0].data->time_mutex);
 			return (1);
 		}
+		pthread_mutex_unlock(&philo[0].data->time_mutex);
 		i++;
 	}
 	return (0);
@@ -47,6 +50,8 @@ int	all_eat(t_philo *philo)
 		pthread_mutex_unlock(&philo[0].data->meal_mutex);
 		i++;
 	}
+	// printf("number philo %d\n", philo->nmbr);
+	// printf("number philo finished %d\n", philo->nbr_finished);
 	if (philo->nbr_finished == philo->nmbr)
 	{
 		pthread_mutex_lock(&philo[0].data->dead_mutex);
@@ -64,7 +69,8 @@ void	*monitor(void *arg)
 	data = (t_philo *)arg;
 	while (1)
 	{
-		if (philosophers_dead(data) == 1 || data->data->dead_flag == 1 || all_eat(data) == 1)
+	
+		if (philosophers_dead(data) == 1 || all_eat(data) == 1 || data->nmbr == 1)
 			break ;
 	}
 	return (data);

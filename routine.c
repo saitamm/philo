@@ -6,7 +6,7 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 10:36:57 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/08/11 10:37:57 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/09/02 11:19:45 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,20 +48,21 @@ int	eat(t_philo *philo)
 	{
 		print_message(DEAD, philo);
 		pthread_mutex_unlock(first_fork);
-		// philo->nbr_finished++;
-		pthread_mutex_lock(&philo->data->dead_mutex);
-		philo->flag = 1;
-		philo->data->dead_flag = 1;
-		pthread_mutex_unlock(&philo->data->dead_mutex);
+		// // philo->nbr_finished++;
+		// pthread_mutex_lock(&philo->data->dead_mutex);
+		// philo->data->dead_flag = 1;
+		// pthread_mutex_unlock(&philo->data->dead_mutex);
+		// philo->flag = 1;
 		return (1);
 	}
 	pthread_mutex_lock(second_fork);
 	print_message("has taken a fork", philo);
 	philo->flag_eating = 1;
-	print_message("is eating",philo);
 	pthread_mutex_lock(&philo->data->meal_mutex);
+	print_message("is eating",philo);
+	pthread_mutex_lock(&philo->data->time_mutex);
 	philo->last_meal = get_time();
-	printf(":::%p\n", &philo->count_meal);
+	pthread_mutex_unlock(&philo->data->time_mutex);
 	philo->count_meal++;
 	pthread_mutex_unlock(&philo->data->meal_mutex);
 	ft_usleep(philo->data->time_to_eat);
@@ -89,10 +90,12 @@ void	*routine(void *arg)
 	philo = (t_philo *)arg;
 	while (1)
 	{
-		if (eat(philo) || philo->data->dead_flag == 1)
+
+		if (eat(philo))
 			break ;
 		think(philo);
 		ft_sleep(philo);
+
 	}
 	return (NULL);
 }
