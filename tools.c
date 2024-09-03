@@ -6,7 +6,7 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 15:55:05 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/09/02 17:04:21 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/09/03 10:49:45 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ int	check_one_philo(t_philo *philo)
 	if (philo->nmbr == 1)
 	{
 		print_message(DEAD, philo);
+		pthread_mutex_lock(&philo->data->dead_mutex);
+		(*philo).data->dead_flag = 1;
+		pthread_mutex_unlock(&philo->data->dead_mutex);
 		return (0);
 	}
 	return (1);

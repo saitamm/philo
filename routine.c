@@ -6,7 +6,7 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 10:36:57 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/09/02 17:04:50 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/09/03 10:58:55 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,13 @@
 
 int	check_dead(t_philo *philo)
 {
-	int	i;
-
-	i = 0;
-	while (i < philo->nmbr)
+	pthread_mutex_lock(&philo[0].data->dead_mutex);
+	if (philo->data->dead_flag == 1)
 	{
-		pthread_mutex_lock(&philo[0].data->dead_mutex);
-		if (philo->data->philo[i].flag == 1)
-		{
-			pthread_mutex_unlock(&philo[0].data->dead_mutex);
-			return (1);
-		}
 		pthread_mutex_unlock(&philo[0].data->dead_mutex);
-		i++;
+		return (1);
 	}
+	pthread_mutex_unlock(&philo[0].data->dead_mutex);
 	return (0);
 }
 
@@ -79,7 +72,7 @@ void	*routine(void *arg)
 		if (eat(philo))
 			break ;
 		pthread_mutex_lock(&philo->data->dead_mutex);
-		if (philo->flag == 1)
+		if (philo->data->dead_flag == 1)
 		{
 			pthread_mutex_unlock(&philo->data->dead_mutex);
 			break ;
