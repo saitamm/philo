@@ -6,7 +6,7 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 10:36:57 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/09/03 10:58:55 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/09/04 14:03:00 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ void	*routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	if (philo->id % 2 == 0)
+		usleep(500);
 	while (1)
 	{
 		if (eat(philo))
