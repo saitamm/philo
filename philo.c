@@ -6,7 +6,7 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 09:52:33 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/09/02 11:08:17 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/09/03 14:37:52 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,6 @@ int	main(int ac, char **av)
 	init_fork(&data, nbr);
 	init_philo(&data, nbr);
 	init_threads(&data, nbr);
-	destory_all(&data);
+	destroy_all(NULL, data.forks, &data);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 15:55:05 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/09/03 10:49:45 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/09/07 12:52:28 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,9 @@ size_t	get_time(void)
 
 int	check_one_philo(t_philo *philo)
 {
-	if (philo->nmbr == 1)
-	{
-		print_message(DEAD, philo);
-		pthread_mutex_lock(&philo->data->dead_mutex);
-		(*philo).data->dead_flag = 1;
-		pthread_mutex_unlock(&philo->data->dead_mutex);
-		return (0);
-	}
+	pthread_mutex_lock(&philo->data->write_mutex);
+	printf("%zu %d is died\n", philo->data->time_to_die, philo->id);
+	pthread_mutex_unlock(&philo->data->write_mutex);
 	return (1);
 }
 
@@ -66,17 +61,22 @@ void	print_message(char *str, t_philo *philo)
 	pthread_mutex_unlock(&philo->data->write_mutex);
 }
 
-void	destory_all(t_data *data)
+void	destroy_all(char *str, t_mtx *forks, t_data *data)
 {
 	int	i;
 
 	i = 0;
+	if (str)
+	{
+		write(2, str, ft_strlen(str));
+		write(2, "\n", 1);
+	}
 	pthread_mutex_destroy(&data->write_mutex);
 	pthread_mutex_destroy(&data->dead_mutex);
 	pthread_mutex_destroy(&data->meal_mutex);
 	while (i < data->philo[0].nmbr)
 	{
-		pthread_mutex_destroy(&data->forks[i]);
+		pthread_mutex_destroy(&forks[i]);
 		i++;
 	}
 	free(data->forks);

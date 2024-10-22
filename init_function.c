@@ -6,7 +6,7 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 10:43:11 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/09/02 16:48:50 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/09/03 14:40:23 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,18 +70,6 @@ void	init_philo(t_data *data, t_argv nbr)
 	}
 }
 
-void	error(t_data *data, char *str, int i)
-{
-	printf("%s\n", str);
-	free(data->forks);
-	free(data->tid);
-	while (i > 0)
-	{
-		free(data->philo);
-		i--;
-	}
-}
-
 void	init_threads(t_data *data, t_argv nbr)
 {
 	int			i;
@@ -89,22 +77,19 @@ void	init_threads(t_data *data, t_argv nbr)
 
 	i = -1;
 	if (pthread_create(&monit, NULL, &monitor, data->philo) != 0)
-	{
-		write(2, "error mssg", 11);
-		return ;
-	}
+		destroy_all("Error in creation", data->forks, data);
 	while (++i < nbr.nmbr_philo)
 	{
 		if (pthread_create(&data->tid[i], NULL, &routine, &data->philo[i]) != 0)
-			error(data, "Error in creation of threads", i);
+			destroy_all("Error in creation", data->forks, data);
 	}
 	if (pthread_join(monit, NULL) != 0)
-		error(data, "Error in joun of monitor", nbr.nmbr_philo);
+		destroy_all("Error in join", data->forks, data);
 	i = 0;
 	while (i < nbr.nmbr_philo)
 	{
 		if (pthread_join(data->tid[i], NULL) != 0)
-			error(data, "errr in join of threads", i);
+			destroy_all("Error in join", data->forks, data);
 		i++;
 	}
 }

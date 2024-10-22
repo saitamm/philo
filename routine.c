@@ -6,7 +6,7 @@
 /*   By: sait-amm <sait-amm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 10:36:57 by sait-amm          #+#    #+#             */
-/*   Updated: 2024/09/04 14:03:00 by sait-amm         ###   ########.fr       */
+/*   Updated: 2024/09/16 12:30:21 by sait-amm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,20 @@ int	eat(t_philo *philo)
 	take_fork(&first_fork, &second_fork, philo);
 	pthread_mutex_lock(first_fork);
 	print_message("has taken a fork", philo);
-	if (!check_one_philo(philo))
+	if (philo->nmbr == 1)
 		return (pthread_mutex_unlock(first_fork), 1);
 	pthread_mutex_lock(second_fork);
 	print_message("has taken a fork", philo);
 	philo->flag_eating = 1;
-	pthread_mutex_lock(&philo->data->meal_mutex);
 	print_message("is eating", philo);
+	pthread_mutex_lock(&philo->data->meal_mutex);
 	pthread_mutex_lock(&philo->data->time_mutex);
 	philo->last_meal = get_time();
 	pthread_mutex_unlock(&philo->data->time_mutex);
 	philo->count_meal++;
 	pthread_mutex_unlock(&philo->data->meal_mutex);
-	ft_usleep(philo->data->time_to_eat);
 	philo->flag_eating = 0;
+	ft_usleep(philo->data->time_to_eat);
 	pthread_mutex_unlock(second_fork);
 	pthread_mutex_unlock(first_fork);
 	return (0);
@@ -54,6 +54,8 @@ int	eat(t_philo *philo)
 void	think(t_philo *philo)
 {
 	print_message("is thinking", philo);
+	if (philo->nmbr % 2 == 1)
+		ft_usleep(philo->data->time_to_eat);
 }
 
 void	ft_sleep(t_philo *philo)
@@ -68,7 +70,7 @@ void	*routine(void *arg)
 
 	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
-		usleep(500);
+		usleep(1);
 	while (1)
 	{
 		if (eat(philo))
